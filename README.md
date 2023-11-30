@@ -1,6 +1,8 @@
 # What is this?
 The file `daySetup.py` is more or less a terminal program for creating the day folder and files
 
+## NOTE: the c templ is still in progress
+
 
 # How to use it?
 1. Create a file called `.session_id` and insert the session token from the cookies from the webpage. This is used to download your puzzle input
