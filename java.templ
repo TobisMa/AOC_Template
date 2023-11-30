@@ -1,0 +1,39 @@
+package $$FOLDER$$;
+import java.lang.*;
+import java.util.*;
+import java.io.*;
+
+
+class $$FILE_O_EXT$$ {
+
+    private String fileContents;
+    private LinkedList<String> lines;
+
+    public static void main(String[] args) throws IOException {
+        $$FILE_O_EXT$$ daySolver = new $$FILE_O_EXT$$();
+        daySolver.solve();
+    }
+
+    public $$FILE_O_EXT$$() throws IOException {
+        lines = new LinkedList<String>();
+        BufferedReader br = new BufferedReader(new FileReader("$$FILE$$"));
+        try {
+            StringBuilder sb = new StringBuilder();
+            String line = br.readLine();
+
+            while (line != null) {
+                sb.append(line);
+                sb.append(System.lineSeparator());
+                line = br.readLine();
+                lines.add(line);
+            }
+            fileContents = sb.toString();
+        } finally {
+            br.close();
+        }
+    }
+
+    public void solve() {
+        
+    }
+}

@@ -1,0 +1,113 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+
+#define BUF_SIZE 1024
+
+
+char* readFile(char* filename) {
+    FILE* fileObj;
+    fileObj = fopen(filename, "r");
+
+    if (fileObj == NULL) {
+        printf("Failed to open file %s\n", filename);
+        exit(EXIT_FAILURE);
+    }
+    char ch;
+
+    int segments = 1;
+    size_t bufIndex = 0;
+    char* fileContents = malloc(BUF_SIZE * sizeof(char));
+
+    if (fileContents == NULL) {
+        printf("Failing allocating memory for fileContents\n");
+        exit(EXIT_FAILURE);
+    }
+
+    do {
+        ch = fgetc(fileObj);
+        fileContents[bufIndex++] = ch != EOF ? ch : '\0';
+        if (bufIndex % BUF_SIZE >= segments) {
+            char* newBuf = realloc(fileContents, ++segments * BUF_SIZE);
+            if (newBuf == NULL) {
+                printf("Reallocating memory failed\n");
+                free(fileContents);
+                exit(EXIT_FAILURE);
+            } 
+            else if (fileContents != newBuf) {
+                fileContents = newBuf;
+            }
+            newBuf = NULL;
+        } 
+    } while (!feof(fileObj));
+    return fileContents;
+}
+
+
+int splitString(const char* string, const char* delimter, char** result) {
+    printf("Hello\n");
+    char* buf = NULL;
+    int splits = 0;
+    int lastSplit = 0;
+
+    result = malloc(sizeof(char*));
+
+    for (int i = 0; i < strlen(string) + 1; i++) {
+        int matches = 0;
+        printf("Splits: %i\n", splits);
+        for (int j = 0; j < strlen(delimter); j++) {
+            printf("Checkiing letter: %c", string[i + j]);
+            if (string[i + j] != delimter[j]) {
+                matches = 1;
+                break;
+            }
+        }
+        if (matches /* || string[i] == '\0' */) {
+            printf("Start\n");
+            strncpy(buf, string + lastSplit, i - lastSplit);
+            buf[i - lastSplit - 1] = '\0';  // overriding invalid char anyways
+            lastSplit = i + strlen(delimter) - 1;
+            char** tmp = realloc(result, sizeof(char*) * (++splits));
+            if (tmp == NULL) {
+                printf("ERROR: Failed to allocate memory for splitting");
+                exit(EXIT_FAILURE);
+            }
+            result = tmp;
+            result[splits - 1] = buf;
+            tmp = NULL;
+            buf = NULL;
+            printf("End\n");
+        }
+    }
+
+    return splits;
+}
+
+void freeSplitString(char** pointer, int count) {
+    for (int i = 0; i < count; i++) {
+        free(pointer[i]);
+    }
+    free(pointer);
+}
+
+
+void solve(const char* data) {
+    char** pointer = 0;
+    int c = splitString("Hello World !", " ", pointer);
+
+    for (int i = 0; i < c; i++) {
+        printf("%s\n", pointer[i]);
+    }
+
+    freeSplitString(pointer, c);
+}
+
+
+int main(int argc, char const *argv[])
+{
+    char* data = readFile("$$FILE$$");
+    solve(data);
+    free(data);    
+    return 0;
+}
