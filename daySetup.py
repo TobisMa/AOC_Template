@@ -35,7 +35,7 @@ seconds = time_left.seconds - hours * 3600 - mins * 60
 
 if DAY <= 24:
     print(RESET + "NOTE: Next day begins in %s hours %s mins and %s seconds" % (hours, mins, seconds))
-    if MONTH == 11:
+    if MONTH == 11 or time_left.seconds > 120:
         raise SystemExit(0)
 
 elif DAY == 25:
