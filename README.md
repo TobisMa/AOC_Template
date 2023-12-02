@@ -1,5 +1,6 @@
 # What is this?
-The file `daySetup.py` is more or less a terminal program for creating the day folder and files
+The file `daySetup.py` is more or less a terminal program for creating the day folder and files.
+This template has been created by me in my free time because, at least for me, setting files up for each day of advent of code seemed to be tedious. 
 
 ## NOTE: the c templ is still in progress
 
