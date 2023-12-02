@@ -33,8 +33,8 @@ splitStrAt (c:s) del buf
     | c == del = buf : splitStrAt s del ""
     | otherwise = splitStrAt s del (buf ++ [c])
 
-strToint :: String -> Integer
-strToint s = read s :: Integer
+strToInt :: String -> Integer
+strToInt s = read s :: Integer
 
 strToFloat :: String -> Float
 strToFloat s = read s :: Float
